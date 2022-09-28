@@ -3,7 +3,6 @@
 char zone = 'u';
 char color = 'u';
 
-
 void setup() {
   Serial.begin(9600);
   setPins();
@@ -25,6 +24,11 @@ void loop() {
     case 'C':
       zoneC();
       break;
+    case 'E':
+      zoneE();
+      break;
+    default:
+      Serial.println("ERROR: no zone detected");
   }
 }
 
@@ -84,3 +88,12 @@ void zoneB(){
 void zoneC(){
   
 }
+
+void zoneE(){
+  
+}
+
+// Brute-force approach functions (in case sensors not working as intended):
+
+
+// Discarded code:
