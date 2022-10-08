@@ -52,8 +52,7 @@ double tiempo;
 #define in4 51
 
 double movementTime = 1000;
-double delayLeftTurn = 200;
-
+double delayLeftTurn = 650;
 
 void setup() {
   Serial.println("Nuevo codigo");
@@ -61,27 +60,15 @@ void setup() {
   setPins();
   attachObjects();
   sensorData();
-  // setZone();
+  // s  etZone();
 }
 
 void loop() {
  //moveForward();
- turnLeft();
+ ramp();
  delay(1000);
 
- int dist = getDistance1();
- Serial.print("Distancia de enfrente: ");
- Serial.print(dist);
- 
- dist = getDistanceLeft();
- Serial.print("Distancia de Izquierda: ");
- Serial.print(dist);
-
- dist = getDistanceRight();
- Serial.print("Distancia de Derecha: ");
- Serial.print(dist);
- 
-
+ //int dist = getDistance1();
  
  //turnLeft();
 
@@ -113,6 +100,15 @@ void loop() {
       Serial.println("ERROR: no zone detected");
       
   }*/
+}
+
+void ramp(){
+  turnLeft();
+  delay(1000);
+  int dist = getDistance1();
+  while (dist > 10){
+    moveForward();
+  }
 }
 
 // Determines the next zone that the robot must finish. Only called on setup. Handles Lack of Progress. Causes infinite loop if no meaningful color is detected.
@@ -237,6 +233,7 @@ int getDistance1(){
   delayMicroseconds(10);
   tiempo=pulseIn(echo1, HIGH); 
   distancia = int(0.017 * tiempo); // Distancia en centimetros
+  Serial.print("Distancia 1: ");
   Serial.println(distancia);
   return distancia;
 }
@@ -291,7 +288,7 @@ void turnLeft(){
     digitalWrite(in2, LOW);
     digitalWrite(in3, HIGH);
     digitalWrite(in4, LOW);
-    delay(movementTime);
+    delay(delayLeftTurn);
     stopWheels();
 }
 
